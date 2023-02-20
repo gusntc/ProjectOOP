@@ -49,23 +49,31 @@ public class ExprTokenizer implements Tokenizer {
         }
     }
 
-    private void ComputeNext(){
+    public void ComputeNext(){
         StringBuilder s = new StringBuilder();
-        while (pos < src.length() && Character.isWhitespace(src.charAt(pos))) pos++;
-        if(pos == src.length()) {
+        while (pos < plan.length() && Character.isWhitespace(plan.charAt(pos))) pos++;
+        if(pos == plan.length()) {
             next = null;
             return;
         }
-        char c = src.charAt(pos);
-        if(Character.isDigit(c)){
+        char c = plan.charAt(pos);
+        if(Character.isAlphabetic(c)){
             s.append(c);
-            for(pos++; pos < src.length() && Character.isDigit(src.charAt(pos)); pos++) {
-                s.append(src.charAt(pos));
+            for(pos++; pos < plan.length() && Character.isAlphabetic(plan.charAt(pos)); pos++) {
+                s.append(plan.charAt(pos));
             }
-        }else if(c == '+' || c == '-' || c == '*' || c == '/' || c == '%' || c == '(' || c == ')'){
+        } else if (c == '=' || c == '+' || c == '-' || c == '*' || c == '/' || c == '%') {
             s.append(c);
             pos++;
-        }else throw new IllegalArgumentException("unknown character : " + c);
+        } else if (c == '(' || c == ')' || c == '{' || c == '}' || c== '^') {
+            s.append(c);
+            pos++;
+        } else if (Character.isDigit(c)) {
+            s.append(c);
+            for(pos++;pos < plan.length() && Character.isDigit(plan.charAt(pos));pos++){
+                s.append(plan.charAt(pos));
+            }
+        } else throw new IllegalArgumentException();
         next = s.toString();
     }
 }
