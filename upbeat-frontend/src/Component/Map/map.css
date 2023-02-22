@@ -1,0 +1,15 @@
+/* .hex {
+    position:relative;
+    margin:0;
+    padding: 0;
+}
+.insidehex {
+    margin-left: 10px;
+    margin-top: 10px;
+} */
+.evenHex{
+    margin-top: 0px;
+}
+.oddHex{
+   margin-top: 88px;
+}

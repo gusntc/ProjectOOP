@@ -1,0 +1,86 @@
+.PlayerData {
+  position: absolute;
+  top: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: top center;
+  padding: 20px 22px;
+  /* padding-left: 30px;
+    padding-top: 8px; */
+  padding-bottom: 15px;
+  width: 300px;
+  height: 120px;
+  background-color: #000;
+  /* background-image: url('../../../public/overlay.png'); */
+  background-size: cover;
+  border-radius: 20px;
+}
+.playerName {
+  margin: 0;
+  margin-top: 5px;
+  font-size: 28px;
+  line-height: 37px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.info {
+  margin-top: 15px;
+  margin-left: 20px;
+  font-size: 15px;
+  line-height: 18px;
+  color: #fff;
+  font-weight: 400;
+}
+.info span {
+  margin-left: 10px;
+}
+.x {
+  position: absolute;
+  right: 30px;
+  top: 3vh;
+  width: 15px;
+  height: 15px;
+  opacity: 0.5;
+  transition: ease-in-out .25s;
+}
+.x:hover {
+  opacity: 1;
+}
+.x:before,
+.x:after {
+  position: absolute;
+  left: 65%;
+  content: " ";
+  top: .5vh;
+  height: 20px;
+  width: 2px;
+  background-color: white;
+}
+.x:before {
+  transform: rotate(45deg);
+}
+.x:after {
+  transform: rotate(-45deg);
+}
+.profile{
+    font-size: 15px;
+    text-transform: uppercase;
+    position: absolute;
+    display: flex;
+    top: 3vh;
+    left: 50%;
+    transform: translateX(-60%);
+    border: #333 solid;
+    border-radius: 50px;
+    transition: ease-in-out .25s;
+}
+.profile p{
+    margin-right: 15px;
+}
+.profile:hover{
+    background-color: #333;
+    color: white;
+}
+.container {
+    display: flex;
+}
