@@ -2,152 +2,127 @@ package org.example;
 
 public class ExprParser implements Parser {
 
-    private  Tokenizer tkz;
+    private final ExprTokenizer tkz;
 
-    public  ExprParser(Tokenizer tkz){
+    public ExprParser(ExprTokenizer tkz) {
+        if (!tkz.hasNextToken()) System.out.println("error at construct");
         this.tkz = tkz;
     }
 
-    @Override
-    public void parse() throws SyntaxError {
-        System.out.println("before plan");
-            parsePlan();
-//            if(tkz.hasNextToken()){
-//                throw new SyntaxError(tkz.peek());
-//            }
-            
-
+    public void parse() {
+        parsePlan();
     }
-
-    private void parsePlan() throws SyntaxError{
-        System.out.println("before statement");
-        parseStament();
+    private void parsePlan() {
+        parseStatement();
     }
-
-    private void parseStament() {
-//        if(tkz.peek("Command"))
-//        parseCommand();
-//        else if (tkz.peek("{")) {
-//            tkz.consume();
-//            parseBlockStament();
-//            if(tkz.peek("}")) tkz.consume();
-//            else throw new SyntaxError("expected : " + "}");
-//        }
-        System.out.println("before ifstatement");
-        parseIfStatement();
-//        parseWhileStatement();
-
+    private void parseStatement() {
+        switch (tkz.peek()){
+            case "{" :
+                parseBlockStatement();
+            case "while" :
+                parseWhileStatement();
+            case "if" :
+                parseIfStatement();
+            default:
+                parseCommand();
+        }
     }
-
-    private void parseBlockStament() {
-        parseStament();
+    private void parseCommand() {
+        if (tkz.peek("done") || tkz.peek("relocate") || tkz.peek("invest") || tkz.peek("move") || tkz.peek("collect") || tkz.peek("shoot")) parseActionCommand();
+        else parseAssignmentStatement();
     }
-
+    private void parseBlockStatement() {
+        if(tkz.peek("{")){
+            tkz.consume();
+            parseStatement();
+            tkz.consume("}");
+        }else{
+            System.out.println("error in block statement");
+        }
+    }
+    private void parseIfStatement() {
+        if(tkz.peek("if")){
+            tkz.consume();
+            if(tkz.peek("(")){
+                parseExpression();
+                tkz.consume(")");
+                if(tkz.peek("then")){
+                    tkz.consume();
+                    parseStatement();
+                    tkz.consume();
+                    parseExpression();
+                }
+            }
+        }else{
+            System.out.println("error in if statement");
+        }
+    }
     private void parseWhileStatement() {
         if(tkz.peek("while")){
             tkz.consume();
             if(tkz.peek("(")){
+                parseExpression();
                 tkz.consume();
-                parseStament();
-                if(tkz.peek(")")) tkz.consume();
-                parseStament();
-            }
-
-        }
-    }
-
-    private void parseIfStatement() {
-
-        if(tkz.peek("if")){
-            tkz.consume();
-
-            if(tkz.peek("(")){
-                tkz.consume();
-//                parseExpression();
-                if(!tkz.hasNextToken() ){
-                    throw new SyntaxError("expected : " + ")");
-                } else if (tkz.peek(")")) {
-                    tkz.consume();
-                } else throw new SyntaxError(tkz.toString());
-            }
-            if(tkz.peek("then")){
-                tkz.consume();
-                parseStament();
-            }
-            if(tkz.peek("else")){
-                tkz.consume();
-                parseStament();
+                parseStatement();
             }
         }
     }
-
-    private void parseCommand() {
-        parseAssignmentStatement();
-        parseActionCommand();
-    }
-
-    private void parseActionCommand() {
-        if(tkz.peek("done")){
-            //done
-        } else if (tkz.peek("relocate")) {
-            //relocate
-        }
-        parseMoveCommand();
-        parseRegionCommand();
-        parseAttackCommand();
-    }
-
-    private void parseAttackCommand() {
-        if(tkz.peek("shoot")){
-            tkz.consume();
-            parseDirection();
-            parseExpression();
-        }
-    }
-
-    private void parseRegionCommand() {
-        if(tkz.peek("invest")){
-            tkz.consume();
-            parseExpression();
-            
-        } else if (tkz.peek("collect")) {
-            tkz.consume();
-            parseExpression();
-        }
-    }
-
-    private void parseMoveCommand() {
-        if(tkz.peek("move")){
-            //move
-            parseDirection();
-        }
-        
-    }
-
-    private void parseDirection() {
-        if(tkz.peek("up")){
-            //Up
-        } else if (tkz.peek("down")) {
-            //down
-        } else if (tkz.peek("upleft")) {
-            //upleft
-        } else if (tkz.peek("upright")) {
-            //upright
-        } else if (tkz.peek("downleft")) {
-            //downleft
-        } else if (tkz.peek("downright")) {
-            //downright
-        }else throw new SyntaxError("unknown direction");
-    }
-
-
     private void parseAssignmentStatement() {
+        String identifier = tkz.consume();
+        if (tkz.peek("done") || tkz.peek("relocate") || tkz.peek("invest") || tkz.peek("move") || tkz.peek("collect") || tkz.peek("shoot")||
+                tkz.peek("opponent") || tkz.peek("nearby") || tkz.peek("up") || tkz.peek("upleft") || tkz.peek("upright") || tkz.peek("down") ||
+                tkz.peek("downleft") || tkz.peek("downright") || tkz.peek("else") || tkz.peek("if") || tkz.peek("then") || tkz.peek("while"))
+            System.out.println("error at parseAS");
+        if (tkz.peek("="))
+            tkz.consume();
+        else
+            System.out.println("error at parseAs");
         parseExpression();
     }
-
+    private void parseActionCommand() {
+        String command = tkz.consume();
+        switch (command) {
+            case "done" :
+                //done
+            case "relocate" :
+                //relocate
+            case "invest" :
+                parseInvest();
+            case "move" :
+                parseMove();
+            case "collect" :
+                parseCollect();
+            case "shoot" :
+                parseShoot();
+            default :
+                throw new SyntaxError("Error in ActionCom");
+        }
+    }
+    private void parseInvest() {
+        parseExpression();
+    }
+    private void parseMove() {
+        parseDirection();
+    }
+    private void parseCollect() {
+        parseExpression();
+    }
+    private void parseShoot() {
+        parseDirection();
+        parseExpression();
+    }
     private void parseExpression() {
         parseTerm();
-    }   
+        while(tkz.hasNextToken() && (tkz.peek("+") || tkz.peek("-"))){
+            if(tkz.peek("+")){
+                tkz.consume();
+                parseExpression();
+            } else if (tkz.peek("-")) {
+                tkz.consume();
+                parseExpression();
+            }
+        }
+    }
 
     private void parseTerm() {
         parseFactor();
@@ -167,28 +142,55 @@ public class ExprParser implements Parser {
 
     private void parseFactor() {
         parsePower();
-        if(tkz.peek("^")){
+        if(tkz.hasNextToken() && tkz.peek("^")){
             tkz.consume();
             parseFactor();
         }
     }
 
     private void parsePower() {
-        int sth;
-        String sone;
-        if(tkz.peek("(")){
-            parseExpression();
+        if(Character.isDigit((tkz.peek().charAt(0)))){
+            System.out.println("now in digit");
+        } else if (tkz.peek("opponent") || tkz.peek("nearby")) {
+            parseInfoExpression();
         }
-        parseInfoExpression();
-
+        if(tkz.hasNextToken() && tkz.peek("(")){
+            tkz.consume("(");
+            parseExpression();
+            tkz.consume(")");
+        }
     }
-
     private void parseInfoExpression() {
-        //Opponent();
-        //parseNearby();
+        if (tkz.peek("opponent")) {
+            tkz.consume();
+        } else if (tkz.peek("nearby")) {
+            tkz.consume();
+            parseDirection();
+        } else {
+            System.out.println("error in info expr");
+        }
     }
-
-
+    private void parseDirection() {
+        if(tkz.peek("up")){
+            //Up
+            tkz.consume();
+        } else if (tkz.peek("down")) {
+            //down
+            tkz.consume();
+        } else if (tkz.peek("upleft")) {
+            //upleft
+            tkz.consume();
+        } else if (tkz.peek("upright")) {
+            //upright
+            tkz.consume();
+        } else if (tkz.peek("downleft")) {
+            //downleft
+            tkz.consume();
+        } else if (tkz.peek("downright")) {
+            //downright
+            tkz.consume();
+        }else throw new SyntaxError("unknown direction");
+    }
 
 
 }
