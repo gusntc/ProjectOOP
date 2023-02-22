@@ -1,22 +1,0 @@
-plan
-state
-
-in state
-before command
-in cm
-in assign
-in check =
-=
-exp
-	in term
-in fac
-
-in power
-t
-exp
-	in term
-in fac
-
-in power
-1
-now in digit
