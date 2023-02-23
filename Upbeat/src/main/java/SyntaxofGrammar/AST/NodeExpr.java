@@ -1,5 +1,9 @@
 package SyntaxofGrammar.AST;
 
-public interface NodeExpr {
-    int eval(String express);
+import java.util.Map;
+
+public interface NodeExpr extends Node {
+    long eval(Map<String, Long> variable);
+
+
 }
