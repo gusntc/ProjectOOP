@@ -1,10 +1,15 @@
 import SingleHexagon from "./Hexagon/SingleHexagon";
 import React, { useState, useEffect } from "react";
+import { useRef } from "react";
 import "./map.css";
+import { AnimatePresence, motion } from "framer-motion";
+import RegionData from "../RegionData/RegionData";
 
 function Map() {
   const [data, setData] = useState(null);
   const [check, setCheck] = useState(false);
+  const [show, setShow] = useState(false);
+  const constraintsRef = useRef(null);
   useEffect(() => {
     const fetchData = async () => {
       // eslint-disable-next-line
@@ -20,37 +25,62 @@ function Map() {
     };
     fetchData();
   }, []);
+  if (check) {
+    console.log(data);
+  }
 
-  console.log(data);
+  const showUI = () => {
+    setShow(true);
+  };
+  const hideUI = () => {
+    setShow(false);
+  };
 
   return (
-    <div style={{ display: "flex", transform: "scale(1)" }}>
-      {data &&
-        data[0].map((item, indexColumn) => {
-          return (
-            <div
-              key={"row" + indexColumn}
-              style={{
-                width: 200 - 200 / 4 + 3,
-              }}
-              className={indexColumn % 2 == 0 ? "oddHex" : "evenHex"}
-            >
-              {data.map((rowitem, indexRow) => {
+    <>
+      <motion.div className="container" ref={constraintsRef}>
+        <motion.div
+          drag
+          className="Map"
+          dragConstraints={constraintsRef}
+        >
+          <div style={{ display: "flex" }}>
+            {data &&
+              data[0].map((item, indexColumn) => {
                 return (
-                  <SingleHexagon
-                    onClick={() => {
-                      alert(indexColumn);
+                  <div
+                    key={"row" + indexColumn}
+                    style={{
+                      width: 200 - 200 / 4 + 3.5,
                     }}
-                    namespace={`${indexColumn}` + `${indexRow}`}
-                    key={`${indexColumn}` + `${indexRow}`}
-                  />
-                  // <div>({arr[indexRow][indexColumn]})</div>
+                    className={indexColumn % 2 === 0 ? "oddHex" : "evenHex"}
+                  >
+                    {data.map((rowitem, indexRow) => {
+                      return (
+                        <SingleHexagon
+                          namespace={`${indexColumn}` + `${indexRow}`}
+                          key={`${indexColumn}` + `${indexRow}`}
+                          // onClick={console.log(`${indexColumn}`+":"+`${indexRow}`)}
+                          onClick={showUI}
+                        />
+                        // <div>({arr[indexRow][indexColumn]})</div>
+                      );
+                    })}
+                  </div>
                 );
               })}
-            </div>
-          );
-        })}
-    </div>
+          </div>
+        </motion.div>
+      </motion.div>
+      {
+        show && (
+          <motion.div className="RegionData">
+            <RegionData/>
+            <div className="x"onClick={hideUI} ></div>
+          </motion.div>
+        )
+      }
+    </>
   );
 }
 

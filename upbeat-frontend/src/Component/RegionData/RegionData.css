@@ -1,0 +1,38 @@
+.RegionData {
+  margin-top: 20px;
+  position: absolute;
+
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: top center;
+  /* padding: 20px 22px; */
+  /* padding-left: 30px;
+      padding-top: 8px; */
+  padding-bottom: 15px;
+  width: 300px;
+  height: 90px;
+  background-color: #3d4143;
+  background-size: cover;
+  border-radius: 20px;
+}
+.RegionName {
+  margin: 0;
+  margin-left: 20px;
+  /* margin-top: 5px; */
+  font-size: 28px;
+  line-height: 37px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.info {
+  margin-top: 5px;
+  margin-left: 40px;
+  font-size: 15px;
+  line-height: 7px;
+  color: #fff;
+  font-weight: 400;
+}
+.info span {
+  margin-left: 10px;
+}
+

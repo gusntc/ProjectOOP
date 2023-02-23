@@ -13,7 +13,7 @@ public class Hexagon2 {
     public Hexagon2(int column ,int row) {
         this.column = column;
         this.row = row;
-        this.grid = new int[column][row];
+        this.grid = new int[row][column];
     }
 
     public int getColumn() {

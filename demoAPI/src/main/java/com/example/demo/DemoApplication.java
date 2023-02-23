@@ -1,5 +1,4 @@
 package com.example.demo;
-import com.example.demo.Hexagon.Hexagon;
 import com.example.demo.Profile.Profile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +29,7 @@ public class DemoApplication {
 	@CrossOrigin
 	@GetMapping("/hex2")
 	public List<List<Integer>> Hex2(){
-		Hexagon2 hexagon2 = new Hexagon2(15,20);
+		Hexagon2 hexagon2 = new Hexagon2(30,16);
 		return hexagon2.getGrid();
 	}
 
@@ -45,22 +44,6 @@ public class DemoApplication {
 	public List<Profile> profiles(){
 		return List.of(new Profile("Sakura" , 300 , 6000));
 	}
-
-	@CrossOrigin
-	@GetMapping("/hexagon")
-	public List<Hexagon> hexagons() {return  List.of(new Hexagon(10,15));}
-//	public String generateHexagonalGridJson(int n) throws JsonProcessingException {
-//		List<Hexagon> hexagons = new ArrayList<>();
-//		for (int q = -n + 1; q < n; q++) {
-//			int r1 = Math.max(-n + 1, -q - n + 1);
-//			int r2 = Math.min(n - 1, -q + n - 1);
-//			for (int r = r1; r <= r2; r++) {
-//				hexagons.add(new Hexagon(q, r));
-//			}
-//		}
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		return objectMapper.writeValueAsString(hexagons);
-//	}
 
 }
 //
