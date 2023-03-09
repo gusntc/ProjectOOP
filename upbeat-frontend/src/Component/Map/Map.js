@@ -9,6 +9,7 @@ function Map() {
   const [data, setData] = useState(null);
   const [check, setCheck] = useState(false);
   const [show, setShow] = useState(false);
+  const [scale , setScale] =  useState(1);
   const constraintsRef = useRef(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -35,16 +36,27 @@ function Map() {
   const hideUI = () => {
     setShow(false);
   };
-
+  const zoomIn = () => {
+    if(scale < 1.5){
+      setScale(scale+0.1)
+    }
+  }
+  const zoomOut = () => {
+    if(scale >0.3){
+      setScale(scale-0.1)
+    }
+  }
   return (
     <>
+    <div onClick={zoomIn}>Zoomin</div>
+    <div onClick={zoomOut}>Zoomout</div>
       <motion.div className="container" ref={constraintsRef}>
         <motion.div
           drag
           className="Map"
           dragConstraints={constraintsRef}
         >
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex" , transform: `scale(${scale})`}}>
             {data &&
               data[0].map((item, indexColumn) => {
                 return (

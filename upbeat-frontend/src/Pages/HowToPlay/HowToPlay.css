@@ -1,0 +1,72 @@
+body {
+  background: rgba(64, 66, 88, 1);
+}
+
+.title {
+  position: relative;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 250;
+  font-size: 64px;
+  letter-spacing: 0.05em;
+  color: #f8f4ea;
+  text-shadow: 9px 8px 6px rgba(0, 0, 0, 0.25);
+}
+
+.underline {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 0px;
+  border: 0.5px solid #ffcaca;
+}
+.howtoplay {
+  padding-top: 60px;
+  position: absolute;
+  background: #f8f4ea;
+  height: 60vh;
+  width: 80vw;
+  left: 50%;
+  transform: translate(-50%);
+  transform-origin: bottom center;
+  margin-top: 40px;
+  border-radius: 60px;
+}
+
+.text {
+  margin: 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60vh;
+  width: 70vw;
+}
+.x {
+  position: absolute;
+  right: 30px;
+  top: 3vh;
+  width: 30px;
+  height: 30px;
+  opacity: 0.5;
+  transition: ease-in-out 0.25s;
+}
+.x:hover {
+  opacity: 1;
+}
+.x:before,
+.x:after {
+  position: absolute;
+  left: 65%;
+  content: " ";
+  top: 0.5vh;
+  height: 30px;
+  width: 2px;
+  background-color: white;
+}
+.x:before {
+  transform: rotate(45deg);
+}
+.x:after {
+  transform: rotate(-45deg);
+}

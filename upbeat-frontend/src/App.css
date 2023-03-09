@@ -1,7 +1,7 @@
-
+/* 
 
 body {
-  /* width: 100vw; */
+
   height: 100vh;
   overflow: hidden;
   padding: 0;
@@ -10,8 +10,5 @@ body {
   justify-content: center;
   align-items: center;
   perspective: 500px;
-  /* top: -50%;
-    left: -50%; */
-  /* transform: translate(-50%, -50%); */
-  /* background: linear-gradient(180deg, #70f, #40f); */
-}
+
+} */

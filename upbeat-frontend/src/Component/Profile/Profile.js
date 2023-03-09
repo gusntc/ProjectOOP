@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faWallet , faSackDollar} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faWallet , faSackDollar } from "@fortawesome/free-solid-svg-icons";
 
 function Profile() {
   const [profile, setProfile] = useState();

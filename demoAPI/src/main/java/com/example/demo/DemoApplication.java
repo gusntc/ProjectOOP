@@ -29,7 +29,7 @@ public class DemoApplication {
 	@CrossOrigin
 	@GetMapping("/hex2")
 	public List<List<Integer>> Hex2(){
-		Hexagon2 hexagon2 = new Hexagon2(30,16);
+		Hexagon2 hexagon2 = new Hexagon2(5,16);
 		return hexagon2.getGrid();
 	}
 
