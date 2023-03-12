@@ -3,19 +3,9 @@ package GameState;
 import SyntaxofGrammar.AST.NodeCollect;
 import SyntaxofGrammar.AST.NodeRelocate;
 
-public class CityCrew {
-    private String owner;
-    private long currow;
-    private long curcol;
-    private long deposit;
-    private long interest;
+public class CityCrew extends Region {
 
-    public NodeRelocate relocate() {
-        return null;
+    public CityCrew(int col, int row) {
+        super(col, row);
     }
-
-    public NodeCollect collect() {
-        return null;
-    }
-
 }
