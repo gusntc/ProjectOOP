@@ -3,11 +3,11 @@ package GameState;
 public class Player {
     private String name;
     private long budget;
-    private CityCenter cityCenter;
+    private Region cityCenter;
 
     private int Hp;
 
-    public Player(String name, long budget,CityCenter cityCenter){
+    public Player(String name, long budget, Region cityCenter){
         this.name = name;
         this.budget = budget;
         this.cityCenter = cityCenter;
@@ -26,8 +26,13 @@ public class Player {
         return (int)this.budget;
     }
 
-    public CityCenter PlayerCityCenter(){
+    public Region PlayerCityCenter(){
         return cityCenter;
+    }
+
+    public Region UpCityCenter(Region cityCenter){
+        this.cityCenter = cityCenter;
+        return this.cityCenter;
     }
 
 }
