@@ -10,12 +10,12 @@ public class Territory implements ActionPlan {
     private Region cityCrew;
     private int CurrentTurn;
     private Player CurrentPlayer;
-    private ArrayList<NodeExpr> territoty;
+    private NodeExpr[][] territoty;
 
     public Territory(Player p1,Player p2){
         this.p1 = p1;
         this.p2 = p2;
-        territoty = new ArrayList<>();
+        territoty = new NodeExpr[15][20];
         CurrentTurn = 1;
         CurrentPlayer = this.p1;
     }
@@ -43,10 +43,22 @@ public class Territory implements ActionPlan {
 
     @Override
     public void Invest(int cash) {
-        if(CurrentPlayer.PlayerBudget() < 1){
+        if(CurrentPlayer.PlayerBudget() < 1 || cash <= 0 || CurrentPlayer.PlayerBudget() < cash){
             return;
         }else{
             CurrentPlayer.BudgetUp(-1);
+            if(cityCrew.Owner() == CurrentPlayer){
+                // do something about Player is citycrew owner
+            }else{
+                if( cityCrew.RegionMaxDeposit() < cityCrew.RegionDeposit() + cash){
+                    int invest =  cityCrew.RegionMaxDeposit() - cityCrew.RegionDeposit();
+                    CurrentPlayer.BudgetUp(-invest);
+                    cityCrew.DepositUp(invest);
+                }else{
+                    CurrentPlayer.BudgetUp(-cash);
+                    cityCrew.DepositUp(cash);
+                }
+            }
         }
     }
 

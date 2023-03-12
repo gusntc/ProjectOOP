@@ -4,7 +4,7 @@ import SyntaxofGrammar.AST.NodeCollect;
 
 import java.util.LinkedList;
 
-public class Region implements IRegion{
+public class Region {
     private long deposit;
     private long maxdeposit;
     private Player owner;
@@ -18,30 +18,38 @@ public class Region implements IRegion{
         deposit = 0;
         owner = null;
     }
-    @Override
+
     public int RegionPosition(){
         return  CrewPos;
     }
-    @Override
+
     public int RegionCol(){
         return col;
     }
-    @Override
+
     public int RegionRow(){
         return row;
     }
-    @Override
+
     public int RegionDeposit(){
         return (int)deposit;
     }
-    @Override
+
     public void DepositUp(int cash){
         deposit += cash;
     }
-    @Override
+
     public Player UpOwner(Player owner){
         this.owner = owner;
         return this.owner;
+    }
+
+    public Player Owner(){
+        return this.owner;
+    }
+
+    public int RegionMaxDeposit(){
+        return (int)maxdeposit;
     }
 
 }
